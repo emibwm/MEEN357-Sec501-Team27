@@ -32,12 +32,12 @@ rover = {'wheel_assembly': wheel_assembly, 'chassis': chassis,
 planet = {'g': 3.72}
 
 # Emily BWM
-# make sure to do the debuging, he expects us to figure out what he mistyped ourselves
+# make sure to do the debuging, he expects us to figure out what he mistyped
 
 def get_mass(rover):
   m = 0
   if type(rover) is not dict:
-    raise Exception('Invalid Input')
+    raise Exception('Invalid input: rover must be a dict')
   else:
     wheel_assembly_mass = rover['wheel_assembly']['wheel']['mass'] + \
     rover['wheel_assembly']['speed_reducer']['mass'] +\
@@ -156,7 +156,7 @@ def F_drive(omega, rover):
   if not isinstance(omega, (int, float, np.ndarray)):
         raise Exception('Invalid input. Not a scalar or vector')
   if not isinstance(rover, dict):
-        raise Exception('Invalid input. Not a dict')
+        raise Exception('Invalid input: rover must be a dict')
   ratio = get_gear_ratio(rover['speed_reducer'])
   tau = tau_motor(omega, rover) #get motor torque
   tau_wheel = tau*ratio
