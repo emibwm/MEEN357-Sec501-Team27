@@ -159,9 +159,9 @@ def F_drive(omega, rover):
   if not isinstance(rover, dict):
         raise Exception('Invalid input: rover must be a dict')
   ratio = get_gear_ratio(rover['wheel_assembly']['speed_reducer'])
-  tau = tau_dcmotor(omega, rover) #get motor torque
+  tau = tau_dcmotor(omega, rover['wheel_assembly']['motor']) #get motor torque
   tau_wheel = tau*ratio
-  F_wheel = tau_wheel/rover['wheel']['radius']
+  F_wheel = tau_wheel/rover['wheel_assembly']['wheel']['radius']
   Fd = 6*F_wheel
 
   return Fd
