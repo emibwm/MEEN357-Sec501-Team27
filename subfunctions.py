@@ -102,8 +102,8 @@ def F_gravity(terrain_angle,rover,planet):
     raise Exception('planet must be a dictionary')
   elif not isinstance(rover, dict):
     raise Exception('rover must be a dictionary')
-  elif terrain_angle < -75 or terrain_angle > 75:
-    raise Exception('terrain_angle must be between -75 and 75')
+  elif np.any(terrain_angle < -75) or np.any(terrain_angle > 75):
+    raise Exception('terrain_angle must be between -75 and 75 degrees')
 
   terrain_angle = np.asarray(terrian_angle)
   m = get_mass(rover)
