@@ -71,10 +71,10 @@ def F_rolling(omega, terrain_angle, rover, planet, Crr):
 
   omega = np.asarray(omega)
   terrain_angle = np.asarray(terrain_angle)
-  if omega != terrain_angle:
+  if omega.shape != terrain_angle.shape:
     raise Exception('omega and terrain angle must be same size')
 
-  if np.any(terrain_angle) < -75 or np.any(terrain_angle) > 75:
+  if np.any(terrain_angle < -75) or np.any(terrain_angle > 75):
     raise Exception('terrain_angle must be in between -75 and 75 degrees')
 
   if not isinstance(rover,dict):
@@ -86,12 +86,12 @@ def F_rolling(omega, terrain_angle, rover, planet, Crr):
   if Crr <=0:
     raise Exception('Crr must be positive')
 
-  Ng = get_gear_ratio(rover['wheel_assembly']['speed reducer'])
+  Ng = get_gear_ratio(rover['wheel_assembly']['speed_reducer'])
   r = rover['wheel_assembly']['wheel']['radius']
   v_rover = (omega*r)/Ng
   m = get_mass(rover)
 
-  Frr = erf(40*v_rover)*Crr*m*planet['g']*np.cos(np.radians(terrain_angle))
+  Frr = -erf(40*v_rover)*Crr*m*planet['g']*np.cos(np.radians(terrain_angle))
 
   return Frr
 
