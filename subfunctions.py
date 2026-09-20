@@ -83,8 +83,8 @@ def F_rolling(omega, terrain_angle, rover, planet, Crr):
   if not isinstance(planet, dict):
     raise Exception('planet must be a dictionary')
 
-  if Crr <=0:
-    raise Exception('Crr must be positive')
+  if not isinstance(Crr, (int, float)) or Crr <= 0:
+    raise Exception('Crr must be a positive scalar')
 
   Ng = get_gear_ratio(rover['wheel_assembly']['speed_reducer'])
   r = rover['wheel_assembly']['wheel']['radius']
@@ -181,8 +181,8 @@ def F_net(omega,terrain_angle,rover,planet,Crr):
     raise Exception('rover must be a dictionary')
   if not isinstance(planet, dict):
     raise Exception('planet must be a dictionary')
-  if Crr <= 0:
-    raise Exception('Crr must be positive')
+  if not isinstance(Crr, (int, float)) or Crr <= 0:
+    raise Exception('Crr must be a positive scalar')
 
   Fd = F_drive(omega,rover)
   Fg = F_gravity(terrain_angle,rover,planet)
