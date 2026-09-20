@@ -125,6 +125,8 @@ def tau_dcmotor(omega, motor):
     raise Exception('Invalid input. Not a scalar')
   if not isinstance(motor, dict):
     raise Exception('Invalid input. Not a vector')
+  if isinstance(omega, np.ndarray) and omega.ndim != 1:
+    raise Exception('Invalid input: omega must be a scalar or a 1D array')
 
   if isinstance(omega, np.ndarray):
     tau = np.zeros(len(omega))
@@ -174,8 +176,8 @@ def F_net(omega,terrain_angle,rover,planet,Crr):
 
   if terrain_angle.size != omega.size:
     raise Exception('omega and terrain_angle must be the same size')
-  if terrain_angle < -75 or terrain_angle > 75:
-    raise Exception('terrain_angle must be between -75 and 75')
+  if np.any(terrain_angle < -75) or np.any(terrain_angle > 75):
+    raise Exception('terrain_angle must be between -75 and 75 degrees')
   if not isinstance(rover, dict):
     raise Exception('rover must be a dictionary')
   if not isinstance(planet, dict):
