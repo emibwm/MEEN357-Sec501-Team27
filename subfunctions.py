@@ -98,16 +98,15 @@ def F_rolling(omega, terrain_angle, rover, planet, Crr):
 #Hailey Reyes
 
 def F_gravity(terrain_angle,rover,planet):
+  m = get_mass(rover)
+  g = planet['g']
+  terrain_angle = np.asarray(terrian_angle)
   if not isinstance(planet, dict):
     raise Exception('planet must be a dictionary')
   elif not isinstance(rover, dict):
     raise Exception('rover must be a dictionary')
   elif np.any(terrain_angle < -75) or np.any(terrain_angle > 75):
     raise Exception('terrain_angle must be between -75 and 75 degrees')
-
-  terrain_angle = np.asarray(terrian_angle)
-  m = get_mass(rover)
-  g = planet['g']
 
   Fgt = -m*g*np.sin(np.radians(terrain_angle))
 
@@ -159,7 +158,7 @@ def F_drive(omega, rover):
         raise Exception('Invalid input. Not a scalar or vector')
   if not isinstance(rover, dict):
         raise Exception('Invalid input: rover must be a dict')
-  ratio = get_gear_ratio(rover['speed_reducer'])
+  ratio = get_gear_ratio(rover['wheel_assembly']['speed_reducer'])
   tau = tau_motor(omega, rover) #get motor torque
   tau_wheel = tau*ratio
   F_wheel = tau_wheel/rover['wheel']['radius']
