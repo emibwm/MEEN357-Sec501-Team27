@@ -9,7 +9,15 @@ Original file is located at
 
 import numpy as np
 import matplotlib.pyplot as plt
-from subfunctions import F_net, get_gear_ratio
+from mpl_toolkits.mplot3d import Axes3D
+from subfunctions import (
+    F_net,
+    get_gear_ratio,
+    wheel_assembly,
+    chassis,
+    science_payload,
+    power_subsys
+)
 
 # ---- ROV!!
 rover = {'wheel_assembly': wheel_assembly, 'chassis': chassis,
@@ -30,6 +38,11 @@ for i in range(np.shape(CRR)[0]):
       omega_high = 3.8
       Crr_sample = float(CRR[i,j])
       slope_sample = float(SLOPE[i,j])
+     ##trying something
+      if F_net(omega_low, slope_sample, rover, planet, Crr_sample) * F_net(omega_high, slope_sample, rover, planet,
+                                                                           Crr_sample) > 0:
+          VMAX[i, j] = np.nan
+          continue
 
       while abs(omega_high - omega_low) > 1e-5:
         omega_center = (omega_high + omega_low)/2
@@ -41,6 +54,17 @@ for i in range(np.shape(CRR)[0]):
 
       omega = (omega_high + omega_low)/2
 
-      Ng = get_gear_ratio(rover['speed_reducer'])
+      Ng = get_gear_ratio(rover['wheel_assembly']['speed_reducer'])
       omega_wheel = omega / Ng
       VMAX[i,j] = 0.30 * omega_wheel
+
+
+figure = plt.figure()
+ax = figure.add_subplot(111, projection='3d')
+ax.plot_surface(CRR,SLOPE,VMAX)
+ax.set_xlabel('Coefficient of Rolling Resistance (Crr)')
+ax.set_ylabel('Terrain Slope (degrees)')
+ax.set_zlabel('Maximum Rover Speed (m/s)')
+ax.set_title('Max Rover Speed vs. Crr vs. Terrain Slope')
+ax.view_init(elev=30,azim=-60)
+plt.show()
