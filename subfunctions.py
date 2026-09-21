@@ -32,12 +32,12 @@ rover = {'wheel_assembly': wheel_assembly, 'chassis': chassis,
 planet = {'g': 3.72}
 
 # Emily BWM
-# make sure to do the debuging, he expects us to figure out what he mistyped
+# make sure to do the debuging, he expects us to figure out what he mistyped ourselves
 
 def get_mass(rover):
   m = 0
   if type(rover) is not dict:
-    raise Exception('Invalid input: rover must be a dict')
+    raise Exception('Invalid Input')
   else:
     wheel_assembly_mass = rover['wheel_assembly']['wheel']['mass'] + \
     rover['wheel_assembly']['speed_reducer']['mass'] +\
@@ -71,7 +71,7 @@ def F_rolling(omega, terrain_angle, rover, planet, Crr):
 
   omega = np.asarray(omega)
   terrain_angle = np.asarray(terrain_angle)
-  if omega.shape != terrain_angle.shape:
+  if omega.size != terrain_angle.size:
     raise Exception('omega and terrain angle must be same size')
 
   if np.any(terrain_angle < -75) or np.any(terrain_angle > 75):
@@ -83,8 +83,8 @@ def F_rolling(omega, terrain_angle, rover, planet, Crr):
   if not isinstance(planet, dict):
     raise Exception('planet must be a dictionary')
 
-  if not isinstance(Crr, (int, float)) or Crr <= 0:
-    raise Exception('Crr must be a positive scalar')
+  if Crr <=0:
+    raise Exception('Crr must be positive')
 
   Ng = get_gear_ratio(rover['wheel_assembly']['speed_reducer'])
   r = rover['wheel_assembly']['wheel']['radius']
@@ -98,15 +98,16 @@ def F_rolling(omega, terrain_angle, rover, planet, Crr):
 #Hailey Reyes
 
 def F_gravity(terrain_angle,rover,planet):
-  m = get_mass(rover)
-  g = planet['g']
   terrain_angle = np.asarray(terrain_angle)
   if not isinstance(planet, dict):
     raise Exception('planet must be a dictionary')
   elif not isinstance(rover, dict):
     raise Exception('rover must be a dictionary')
   elif np.any(terrain_angle < -75) or np.any(terrain_angle > 75):
-    raise Exception('terrain_angle must be between -75 and 75 degrees')
+    raise Exception('terrain_angle must be between -75 and 75')
+
+  m = get_mass(rover)
+  g = planet['g']
 
   Fgt = -m*g*np.sin(np.radians(terrain_angle))
 
@@ -124,11 +125,9 @@ def tau_dcmotor(omega, motor):
     raise Exception('Invalid input. Not a scalar')
   if not isinstance(motor, dict):
     raise Exception('Invalid input. Not a vector')
-  if isinstance(omega, np.ndarray) and omega.ndim != 1:
-    raise Exception('Invalid input: omega must be a scalar or a 1D array')
 
-  if isinstance(omega, np.ndarray):
-    tau = np.zeros(len(omega))
+  if isinstance(omega, np.ndarray) and omega.ndim > 0:
+    tau = np.zeros(omega.shape)
     for i in range(len(omega)):
       if omega[i] > motor['speed_noload']: #spinning faster
             tau[i] = 0.0
@@ -157,7 +156,7 @@ def F_drive(omega, rover):
   if not isinstance(omega, (int, float, np.ndarray)):
         raise Exception('Invalid input. Not a scalar or vector')
   if not isinstance(rover, dict):
-        raise Exception('Invalid input: rover must be a dict')
+        raise Exception('Invalid input. Not a dict')
   ratio = get_gear_ratio(rover['wheel_assembly']['speed_reducer'])
   tau = tau_dcmotor(omega, rover['wheel_assembly']['motor']) #get motor torque
   tau_wheel = tau*ratio
@@ -176,13 +175,13 @@ def F_net(omega,terrain_angle,rover,planet,Crr):
   if terrain_angle.size != omega.size:
     raise Exception('omega and terrain_angle must be the same size')
   if np.any(terrain_angle < -75) or np.any(terrain_angle > 75):
-    raise Exception('terrain_angle must be between -75 and 75 degrees')
+    raise Exception('terrain_angle must be between -75 and 75')
   if not isinstance(rover, dict):
     raise Exception('rover must be a dictionary')
   if not isinstance(planet, dict):
     raise Exception('planet must be a dictionary')
-  if not isinstance(Crr, (int, float)) or Crr <= 0:
-    raise Exception('Crr must be a positive scalar')
+  if Crr <= 0:
+    raise Exception('Crr must be positive')
 
   Fd = F_drive(omega,rover)
   Fg = F_gravity(terrain_angle,rover,planet)
@@ -190,4 +189,5 @@ def F_net(omega,terrain_angle,rover,planet,Crr):
 
   Fnet = Fd + Fg + Frr
 
+  return Fnet
   return Fnet
