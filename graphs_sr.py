@@ -10,16 +10,16 @@ Original file is located at
 import numpy as np
 import matplotlib.pyplot as plt
 import subfunctions as sf
-
-torque_in = sf.tau_dcmotor(omega,motor)
 omega = np.linspace(0, 3.80, 100)
-
+motor = sf.motor
+torque_in = sf.tau_dcmotor(omega,motor)
+speed_reducer = sf.speed_reducer
 Ng = sf.get_gear_ratio(speed_reducer)
 torque_out = torque_in * Ng
 omega_out = omega/Ng
 power_out = omega * torque_out
 
-plt.figure()
+plt.figure(figsize=[8,6])
 
 plt.subplot(3,1,1)
 plt.plot(torque_out, omega_out)
