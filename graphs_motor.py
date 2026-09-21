@@ -9,12 +9,13 @@ Original file is located at
 
 import numpy as np
 import matplotlib.pyplot as plt
-import subfunctions as sf
+from subfunctions import tau_dcmotor,motor
 
-torque = sf.tau_dcmotor(omega,motor)
+omega=np.linspace(0,motor['speed_noload'],100)
+torque =tau_dcmotor(omega,motor)
 power = omega * torque
 
-plt.figure()
+plt.figure(figsize=(8,10))
 
 plt.subplot(3,1,1)
 plt.plot(omega,torque)
@@ -32,3 +33,4 @@ plt.xlabel('Motor Shaft Speed (rad/s)')
 plt.ylabel('Motor Power (W)')
 
 plt.show()
+
