@@ -63,7 +63,7 @@ for i in range(len(Crr_array)):
 
         omega = (omega_high + omega_low)/2
 
-        Ng = get_gear_ratio(rover['speed_reducer'])
+        Ng = get_gear_ratio(rover['wheel_assembly']['speed_reducer'])
         omega_wheel = omega / Ng
         v_max[i] = 0.30 * omega_wheel
 
