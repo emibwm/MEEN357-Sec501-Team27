@@ -17,7 +17,7 @@ speed_reducer = sf.speed_reducer
 Ng = sf.get_gear_ratio(speed_reducer)
 torque_out = torque_in * Ng
 omega_out = omega/Ng
-power_out = omega * torque_out
+power_out = omega_out * torque_out
 
 plt.figure(figsize=[8,6])
 
@@ -33,7 +33,7 @@ plt.ylabel('Motor Power (W)')
 
 plt.subplot(3,1,3)
 plt.plot(omega_out,torque_out)
-plt.xlabel('Motor Speed (rad/s')
-plt.ylabel('Motor Shaft Torque (N/m)')
+plt.xlabel('Motor Speed (rad/s)')
+plt.ylabel('Motor Power (W))')
 
 plt.show()
