@@ -37,7 +37,7 @@ planet = {'g': 3.72}
 def get_mass(rover):
   m = 0
   if type(rover) is not dict:
-    raise Exception('Invalid Input')
+    raise Exception('Invalid Input. Rover must be a dict.')
   else:
     wheel_assembly_mass = rover['wheel_assembly']['wheel']['mass'] + \
     rover['wheel_assembly']['speed_reducer']['mass'] +\
@@ -186,8 +186,8 @@ def F_net(omega,terrain_angle,rover,planet,Crr):
     raise Exception('rover must be a dictionary')
   if not isinstance(planet, dict):
     raise Exception('planet must be a dictionary')
-  if Crr <= 0:
-    raise Exception('Crr must be positive')
+  if not isinstance(Crr, (int, float)) or Crr <= 0:
+    raise Exception('Crr must be a positive scalar')
 
   Fd = F_drive(omega,rover)
   Fg = F_gravity(terrain_angle,rover,planet)
