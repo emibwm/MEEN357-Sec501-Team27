@@ -127,13 +127,13 @@ def F_gravity(terrain_angle,rover,planet):
 
 import numpy as np
 def tau_dcmotor(omega, motor):
-  if not isinstance(omega, (int, float, np.ndarray)):
-    raise Exception('Invalid input. Not a scalar')
+  if isinstance(omega, np.ndarray) and omega.ndim > 1:
+    raise Exception('Invalid input. Omega must be a scalar or an array')
   if not isinstance(motor, dict):
     raise Exception('Invalid input. Not a vector')
-  
-  if isinstance(omega, np.ndarray):
-    tau = np.zeros(len(omega))
+
+  if isinstance(omega, np.ndarray) and omega.ndim > 0:
+    tau = np.zeros(omega.shape)
     for i in range(len(omega)):
       if omega[i] > motor['speed_noload']: #spinning faster
             tau[i] = 0.0
