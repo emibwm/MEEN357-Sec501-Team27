@@ -197,3 +197,40 @@ def F_net(omega,terrain_angle,rover,planet,Crr):
 
   return Fnet
   return Fnet
+
+
+def motorW(v, rover):
+    '''
+    
+
+    Parameters
+    ----------
+    v : Scalar or 1D array
+        Translational velocity of rover.
+    rover : Dict
+        Rover dictionary that contains wheel radius and speed reducer values.
+
+    Raises
+    ------
+    Exception
+        If velocity is not a scalar or a 1D array or if the rover is not a dict.
+
+    Returns
+    -------
+    w : Scalar 1D array
+        Rotational speed of the motor shaft.
+
+    '''
+    
+    if not isinstance(v, (int,float, np.ndarray)): 
+        raise Exception('Velocity is not a scalar or array.')
+    if isinstance(v, np.ndarray): #Ensures v is a 1D array
+        if v.ndim != 1:
+            raise Exception('Velocity is not a 1D array.')
+    if not isinstance(rover, dict):
+        raise Exception('Invalid input. Not a dict')
+    Ng = get_gear_ratio(rover['wheel_assembly']['speed_reducer'])
+    r = rover['wheel_assembly']['wheel']['radius']
+    w_rover = v/r 
+    w = Ng*w_rover
+    return w
