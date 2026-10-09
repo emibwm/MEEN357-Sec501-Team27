@@ -197,6 +197,18 @@ def F_net(omega,terrain_angle,rover,planet,Crr):
 
   return Fnet
 
+## Hailey Reyes 
+
+def mechpower(v,rover):
+    if not isinstance(v, (int, float, np.ndarray)):
+        raise Exception('V must be a scalar or vector of numerical values.')
+    if not isinstance(rover, dict):
+        raise Exception('Rover must be a dictionary.')
+    omega = motorW(v,rover)
+    tau = tau_dcmotor(v,rover['wheel_assembly']['motor'])
+    p = omega*tau
+
+    return p
 
 def motorW(v, rover):
     '''
