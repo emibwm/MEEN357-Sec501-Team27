@@ -273,3 +273,30 @@ def rover_dynamics(t, y, rover, planet, experiment):
     dydt = np.array([a,y[0]])
 
     return dydt
+
+## Hailey Reyes 
+def battenergy(t,v,rover):
+
+    if not isinstance(rover,dict):
+        raise Exception('rover must be a dictionary.')
+   ##need to be equal length 1D
+    if not isinstance(t,np.ndarray) or t.ndim != 1:
+        raise Exception('t must be a 1D vector of numerical values.')
+    if not isinstance(v,np.ndarray) or v.ndim != 1:
+        raise Exception('v must be a 1D vector of numerical values.')
+    if len(t) != len(v):
+        raise Exception('t and v must be the same length.')
+
+    motor = rover['wheel_assembly']['motor']
+    omega = motorW(v,rover)
+    tau = tau_dcmotor(omega,motor)
+    pmotor= mechpower(v,rover)
+
+## interpolate torque values w their percents
+    effcy = np.array(motor['effcy'])
+    efficiency = np.interp(tau,effcy[0], effcy[1]) / 100
+    pbatt = 6 * (pmotor/efficiency)
+
+##integrate by trapezoid rule
+    E = np.trapezoid(pbatt,t)
+    return E
