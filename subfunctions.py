@@ -233,3 +233,31 @@ def motorW(v, rover):
     w_rover = v/r 
     w = Ng*w_rover
     return w
+
+#NOT DONE YET
+import numpy as np 
+
+def rover_dynamics(t, y, rover, planet, experiment):
+    if not isinstance(t, (float,int)):
+        raise Exception('')
+    if not isinstance(y, np.ndarray):
+        raise Exception('')
+    if y.ndim != 1:
+        raise Exception('')
+    if len(y) !=2:
+        raise Exception('')
+    if not isinstance(rover, dict):
+        raise Exception('')
+    if not isinstance(planet, dict):
+        raise Exception('')        
+    if not isinstance(experiment, dict):
+        raise Exception('')  
+        
+    terrain_angle = alpha_fun(y[1]) 
+    omega = motorW(y[0], rover)
+    F = F_net(omega, terrain_angle, rover, planet, Crr)
+    m = get_mass(rover)
+    a = F/m
+    dydt = np.array([a,y[0]])
+
+    return dydt
