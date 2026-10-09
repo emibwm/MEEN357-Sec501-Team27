@@ -196,7 +196,6 @@ def F_net(omega,terrain_angle,rover,planet,Crr):
   Fnet = Fd + Fg + Frr
 
   return Fnet
-  return Fnet
 
 
 def motorW(v, rover):
