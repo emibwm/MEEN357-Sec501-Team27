@@ -300,3 +300,21 @@ def battenergy(t,v,rover):
 ##integrate by trapezoid rule
     E = np.trapezoid(pbatt,t)
     return E
+
+###Hailey Reyes 
+
+from scipy.integrate import solve_ivp
+def simulate_rover(rover, planet, experiment, end_event):
+
+    tspan = experiment['time_range']
+    y0 = experiment['initial_conditions']
+    ##stop condition
+    events = end_of_mission_event(end_event)
+##calc and save
+    solution = solve_ivp(lambda t, y: rover_dynamics(t,y,rover,planet, experiment), tspan, y0, events=events)
+    rover['telemetry'] = {
+        'time': solution.t,
+        'velocity': solution.y[0],
+        'position': solution.y[1]
+    }
+    return rover
