@@ -25,9 +25,11 @@ science_payload = {'mass': 75.0}
 power_subsys = {'mass': 90.0}
 # ---- Wheel Assembly
 wheel_assembly = {'wheel': wheel, 'speed_reducer': speed_reducer, 'motor': motor}
+# ---- New Addition
+telemetry = {'Time': None, 'completion_time': 0, 'velocity': None, 'position': None, 'distance_traveled': 0, 'max_velocity': 0, 'average_velocity': 0, 'power': None, 'battery_energy': 0, 'energy_per_distance': 0}
 # ---- ROV!!
 rover = {'wheel_assembly': wheel_assembly, 'chassis': chassis,
-         'science_payload': science_payload, 'power_subsys': power_subsys}
+         'science_payload': science_payload, 'power_subsys': power_subsys, 'telemetry': telemetry}
 # ---- Planet
 planet = {'g': 3.72}
 
