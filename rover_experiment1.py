@@ -19,21 +19,21 @@ position = rover['telemetry']['position']
 
 power = mechpower(velocity,rover)
 
-#x
+#
 plt.figure(figsize=[8,14])
-
+##x
 plt.subplot(3,1,1)
 plt.plot(time,position)
 plt.title('Position')
 plt.xlabel('Time (s)')
 plt.ylabel('Position (m)')
-#
+#v
 plt.subplot(3,1,2)
 plt.plot(time,velocity)
 plt.title('Velocity')
 plt.xlabel('Time (s)')
 plt.ylabel('Velocity (m/s)')
-
+##p
 plt.subplot(3,1,3)
 plt.plot(time,power)
 plt.title('Power')
