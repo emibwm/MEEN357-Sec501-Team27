@@ -235,10 +235,11 @@ def mechpower(v, rover):
 
     return p
 
+#Emily BWM
 
 def motorW(v, rover):
     '''
-
+    Gets the translational velocity of the rover and the wheel radius and speed reducer values to return the rotational speed of the motor shaft.
 
     Parameters
     ----------
@@ -272,25 +273,57 @@ def motorW(v, rover):
     w = Ng * w_rover
     return w
 
-
-# NOT DONE YET
-import numpy as np
+#Emily BWM
 
 def rover_dynamics(t, y, rover, planet, experiment):
+    '''
+    Computes the derivative of the state vector for the rover given its 
+    current state.
+
+    Parameters
+    ----------
+    t : scalar 
+        Time sample in seconds.
+    y : 1D numpy array
+        First element is rover velocity in m/s and second one is rover position
+        in m.
+    rover : dict
+        Data containing rover definition.
+    planet : dict
+        Data containing planet definition.
+    experiment : dict
+        Data containing experiment definition.
+
+    Raises
+    ------
+    Exception
+        If t is not a scalar
+        If y is not a 1D numpy array with 2 elements
+        If rover is not a dictionary
+        If planet is not a dictionary
+        If experiment is not a dictionary
+
+    Returns
+    -------
+    dydt : 1D numpy array
+        Two element array with rover acceleration as first element in m/s^2
+        and rover velocity as second element in m/s
+
+    '''
     if not isinstance(t, (float, int)):
-        raise Exception('')
+        raise Exception('t must be a scalar')
     if not isinstance(y, np.ndarray):
-        raise Exception('')
+        raise Exception('y must be a numpy array')
     if y.ndim != 1:
-        raise Exception('')
+        raise Exception('y must be a 1D numpy array')
     if len(y) != 2:
-        raise Exception('')
+        raise Exception('y must have 2 elements')
     if not isinstance(rover, dict):
-        raise Exception('')
+        raise Exception('rover must be a dictionary')
     if not isinstance(planet, dict):
-        raise Exception('')
+        raise Exception('planet must be a dictionary')
     if not isinstance(experiment, dict):
-        raise Exception('')
+        raise Exception('experiment must be a dictionary')
 
     terrain_angle = alpha_fun(y[1])
     omega = motorW(y[0], rover)
