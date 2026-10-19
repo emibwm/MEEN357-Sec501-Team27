@@ -225,7 +225,7 @@ def F_net(omega, terrain_angle, rover, planet, Crr):
 ## Hailey Reyes
 
 def mechpower(v, rover):
-'''
+    '''
     Calculates the mechanical power of the motor shaft based on the velocity and rover dict
 
     Parameters
