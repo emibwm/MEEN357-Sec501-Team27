@@ -35,9 +35,9 @@ effcy = rover['wheel_assembly']['motor']['effcy']
 effcy_tau = rover['wheel_assembly']['motor']['effcy_tau']
 effcy_fun = scp.interp1d(effcy_tau, effcy, kind = 'cubic')
 
-maxi = np.max(effcy_tau)
+maxi = np.max(effcy_tau) 
 mini = np.min(effcy_tau)
-torque = np.linspace(mini, maxi, num= 100)
+torque = np.linspace(mini, maxi, num= 100) #getting data points for graph
 eff = effcy_fun(torque)
 
 plt.ylabel('Efficiency (unitless)')
