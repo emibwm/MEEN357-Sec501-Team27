@@ -363,7 +363,7 @@ def rover_dynamics(t, y, rover, planet, experiment):
 
 ## Hailey Reyes
 def battenergy(t, v, rover):
-    '''
+        '''
         Calculates total energy used by the battery over a given time
 
         Parameters
@@ -415,7 +415,7 @@ from scipy.integrate import solve_ivp
 
 from end_of_mission_event import end_of_mission_event
 def simulate_rover(rover, planet, experiment, end_event):
-    '''
+        '''
         Simulates rover dynamics over time and updates the rover dictionary with results.
 
         Parameters
