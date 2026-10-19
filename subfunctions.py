@@ -225,6 +225,27 @@ def F_net(omega, terrain_angle, rover, planet, Crr):
 ## Hailey Reyes
 
 def mechpower(v, rover):
+'''
+    Calculates the mechanical power of the motor shaft based on the velocity and rover dict
+
+    Parameters
+    ----------
+    v : Scalar or 1D array
+        Translational velocity of rover.
+    rover : Dict
+        Rover dictionary 
+        
+    Raises
+    ------
+    Exception
+        If v is not a scalar or a 1D array of numerical values or if rover is not a dict.
+
+    Returns
+    -------
+    p : Scalar or 1D array
+        Mechanical power of the motor shaft
+
+    '''
     if not isinstance(v, (int, float, np.ndarray)):
         raise Exception('V must be a scalar or vector of numerical values.')
     if not isinstance(rover, dict):
@@ -342,6 +363,29 @@ def rover_dynamics(t, y, rover, planet, experiment):
 
 ## Hailey Reyes
 def battenergy(t, v, rover):
+    '''
+        Calculates total energy used by the battery over a given time
+
+        Parameters
+        ----------
+        t : 1D array
+            Time vector corresponding to the velocity values.
+        v : 1D array
+            Translational velocity vector of the rover.
+        rover : Dict
+            Rover dictionary containing wheel assembly and motor parameters.
+
+        Raises
+        ------
+        Exception
+            If rover is not a dict, if t or v are not 1D arrays, or if t and v are not the same length.
+
+        Returns
+        -------
+        E : Scalar
+            Total energy used by battery.
+
+        '''
     if not isinstance(rover, dict):
         raise Exception('rover must be a dictionary.')
     ##need to be equal length 1D
@@ -365,13 +409,32 @@ def battenergy(t, v, rover):
     E = np.trapezoid(pbatt, t)
     return E
 
-
 ###Hailey Reyes
 
 from scipy.integrate import solve_ivp
 
 from end_of_mission_event import end_of_mission_event
 def simulate_rover(rover, planet, experiment, end_event):
+    '''
+        Simulates rover dynamics over time and updates the rover dictionary with results.
+
+        Parameters
+        ----------
+        rover : Dict
+            Rover dictionary containing specifications, updated with simulation telemetry.
+        planet : Dict
+            Dictionary containing planet and environmental properties.
+        experiment : Dict
+            Dictionary containing experiment parameters, including time range and initial conditions.
+        end_event : Dict or function
+            End of mission event condition used to stop integration.
+
+        Returns
+        -------
+        rover : Dict
+            Rover dictionary updated with a 'telemetry' key containing time, velocity, and position arrays.
+
+        '''
     tspan = experiment['time_range']
     y0 = experiment['initial_conditions']
     ##stop condition
