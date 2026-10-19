@@ -439,7 +439,7 @@ def battenergy(t, v, rover):
     pmotor = mechpower(v, rover)
 
     ## interpolate torque values w their percents
-    effcy_fun = scp.interp1d(motor['effcy_tau'], motor['effcy'], kind = 'cubic')
+    effcy_fun = scp.interp1d(motor['effcy_tau'], motor['effcy'], kind = 'cubic') #Ensure to be cubic just like in task 5
     efficiency = effcy_fun(tau)
     pbatt = 6 * (pmotor / efficiency)
 
@@ -476,7 +476,7 @@ def simulate_rover(rover, planet, experiment, end_event):
     ##stop condition
     events = end_of_mission_event(end_event)
     ##calc and save
-    solution = solve_ivp(lambda t, y: rover_dynamics(t, y, rover, planet, experiment), tspan, y0, events=events, rtol=1e-7, atol=1e-9, max_step=1.0)
+    solution = solve_ivp(lambda t, y: rover_dynamics(t, y, rover, planet, experiment), tspan, y0, events=events, rtol=1e-7, atol=1e-9, max_step=1.0) #small step size
 
     rover['telemetry'] = {
         'time': solution.t,
