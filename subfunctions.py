@@ -317,7 +317,7 @@ def motorW(v, rover):
         Rotational speed of the motor shaft.
 
     '''
-
+    
     if not isinstance(v, (int, float, np.ndarray)):
         raise Exception('Velocity is not a scalar or array.')
     if isinstance(v, np.ndarray):  # Ensures v is a 1D array
@@ -325,9 +325,9 @@ def motorW(v, rover):
             raise Exception('Velocity is not a 1D array.')
     if not isinstance(rover, dict):
         raise Exception('Invalid input. Not a dict')
-    Ng = get_gear_ratio(rover['wheel_assembly']['speed_reducer'])
+    Ng = get_gear_ratio(rover['wheel_assembly']['speed_reducer']) 
     r = rover['wheel_assembly']['wheel']['radius']
-    w_rover = v / r
+    w_rover = v / r #relationshpi between translational and angular velocity
     w = Ng * w_rover
     return w
 
@@ -383,8 +383,8 @@ def rover_dynamics(t, y, rover, planet, experiment):
     if not isinstance(experiment, dict):
         raise Exception('experiment must be a dictionary')
 
-    terrain_angle = alpha_fun(y[1])
-    omega = motorW(y[0], rover)
+    terrain_angle = alpha_fun(y[1]) 
+    omega = motorW(y[0], rover) #motor speed
     Crr = experiment['Crr']
     F = F_net(omega, terrain_angle, rover, planet, Crr)
     m = get_mass(rover)
