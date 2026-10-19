@@ -437,7 +437,8 @@ def battenergy(t, v, rover):
     pmotor = mechpower(v, rover)
 
     ## interpolate torque values w their percents
-    efficiency = np.interp(tau, motor['effcy_tau'], motor['effcy'])
+    effcy_fun = scp.interp1d(motor['effcy_tau'], motor['effcy'], kind = 'cubic')
+    efficiency = effcy_fun(tau)
     pbatt = 6 * (pmotor / efficiency)
 
     ##integrate by trapezoid rule
