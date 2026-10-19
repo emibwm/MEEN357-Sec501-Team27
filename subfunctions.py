@@ -37,6 +37,7 @@ planet = {'g': 3.72}
 ##Import alpha_fun manually so plots from experiment vis. don't pop up in other script
 from define_experiment import experiment1
 from scipy.interpolate import interp1d
+from scipy.integrate import solve_ivp
 
 experiment, end_event = experiment1()
 alpha_fun = interp1d(
@@ -398,6 +399,7 @@ def rover_dynamics(t, y, rover, planet, experiment):
 
 ## Hailey Reyes
 def battenergy(t, v, rover):
+    import scipy.interpolate as scp
     '''
     Calculates total energy used by the battery over a given time
 
@@ -447,7 +449,7 @@ def battenergy(t, v, rover):
 
 ###Hailey Reyes
 
-from scipy.integrate import solve_ivp
+
 def simulate_rover(rover, planet, experiment, end_event):
     '''
     Simulates rover dynamics over time and updates the rover dictionary with results.
