@@ -38,6 +38,7 @@ planet = {'g': 3.72}
 from define_experiment import experiment1
 from scipy.interpolate import interp1d
 from scipy.integrate import solve_ivp
+import scipy.interpolate as scp
 
 experiment, end_event = experiment1()
 alpha_fun = interp1d(
