@@ -1,3 +1,10 @@
+import matplotlib.pyplot as plt
+from define_edl_system import *
+from subfunctions_EDL import *
+from define_planet import *
+from define_mission_events import *
+from redefine_edl_system
+
 #creates dictionaries
 edl_system = define_edl_system_1()
 mars = define_planet()
