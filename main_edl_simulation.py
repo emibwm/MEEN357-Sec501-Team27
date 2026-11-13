@@ -31,6 +31,9 @@ edl_system['parachute']['deployed'] = True   # our parachute is open
 edl_system['parachute']['ejected'] = False   # and still attached
 edl_system['rover']['on_ground'] = False # the rover has not yet landed
 edl_system['parachute']['diameter'] = 18.0
+## new setting to use mach correction
+edl_system['parachute']['use_mach_correction'] = True
+tmax = 2000   # [s] maximum simulated time
 
 tmax = 2000   # [s] maximum simulated time
 
